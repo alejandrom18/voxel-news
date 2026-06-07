@@ -1,0 +1,29 @@
+# ==============================================================================
+# .htaccess - Blindaje de Seguridad del Directorio de Cargas (uploads) | VOXEL
+# ==============================================================================
+#
+# Este archivo protege la carpeta física de subidas contra ejecución de scripts.
+# Aunque el código PHP filtre las subidas, si un hacker lograra esquivar el filtro,
+# este archivo impedirá que el servidor web Apache ejecute cualquier script (RCE).
+
+# 1. Desactivar el listado de archivos del directorio (Evita que terceros vean todas las imágenes cargadas)
+Options -Indexes
+
+# 2. Desactivar la ejecución de Scripts CGI en este directorio
+Options -ExecCGI
+
+# 3. Eliminar manejadores PHP en esta carpeta para que se lean como texto plano
+<FilesMatch "\.(php|php5|php7|php8|phtml|pl|py|jsp|asp|sh|cgi)$">
+    # Forzar a que cualquier script se trate como texto sin formato en lugar de código ejecutable
+    ForceType text/plain
+    
+    # Denegar completamente el acceso HTTP directo a estos archivos
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# 4. Denegar el acceso a archivos de configuración ocultos o de control
+<FilesMatch "^\.">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>

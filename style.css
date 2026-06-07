@@ -1,0 +1,1252 @@
+:root {
+  --color-first: #f3f5e3e8;
+  --color-second: #1215ca;
+  --color-third: #565756;
+  --color-backg: #f4f6f9;
+  --font-color: #050505;
+  --font: "Oswald", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  line-height: 1.6;
+  color: var(--font-color);
+  background-color: var(--color-backg);
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--font);
+}
+
+/*------------------------------------------------------------*/
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background: var(--color-first);
+  color: var(--font-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
+  color: var(--font-color);
+  gap: 40px;
+  list-style: none;
+}
+
+.nav-links li a {
+  color: var(--font-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-links li a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--color-second);
+  transition: width 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: var(--color-second);
+}
+
+.nav-links li a:hover::after {
+  width: 100%;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.menu-toggle,
+.menu-icon {
+  display: none;
+}
+
+.menu-icon svg rect {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: 14px 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .menu-icon {
+    display: flex;
+    align-items: center;
+    font-size: 2.2rem;
+    cursor: pointer;
+    margin-right: 20px;
+    line-height: 1;
+  }
+
+  .header {
+    position: relative;
+  }
+
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-first);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+  }
+
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .menu-toggle:checked~.nav {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .menu-toggle:checked~.menu-icon svg rect:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .menu-toggle:checked~.menu-icon svg rect:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle:checked~.menu-icon svg rect:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+}
+
+/*------------------------------------------------------------*/
+
+.hero {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 15px;
+
+}
+
+.hero-side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero-main,
+.hero-small {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-main:hover,
+.hero-small:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+.hero-img,
+.hero-img-small {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.hero-main:hover .hero-img,
+.hero-small:hover .hero-img-small {
+  transform: scale(1.05);
+}
+
+
+/* 
+   CONTENEDOR DE TEXTO EXPANDIBLE (Novedad):
+   Añadimos transiciones de padding y degradados. Al hacer hover, incrementamos
+   el espacio y oscurecemos el degradado hacia arriba para alojar y hacer legible
+   el título completo del artículo, previniendo choques estéticos con la foto.
+*/
+.hero-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 25px 20px 20px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+  color: #fff;
+  box-sizing: border-box;
+  transition: background 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), padding-top 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 2;
+}
+
+.hero-text-small {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 15px 15px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+  color: #fff;
+  box-sizing: border-box;
+  transition: background 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), padding-top 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 2;
+}
+
+/* Al hover de los contenedores destacados, el gradiente oscuro protector sube suavemente */
+.hero-main:hover .hero-text {
+  padding-top: 50px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.25) 100%);
+}
+
+.hero-small:hover .hero-text-small {
+  padding-top: 40px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.25) 100%);
+}
+
+.tag {
+  background-color: var(--color-second);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+/* 
+   TÍTULOS INTELIGENTES CON TRUNCADO MULTILÍNEA:
+   Por defecto, limitamos la visualización a máximo 2 líneas. Al hacer hover,
+   el navegador elimina el límite (-webkit-line-clamp: 6) revelando todas las palabras
+   de forma majestuosa y súper interactiva, sin deformar la tarjeta.
+*/
+.hero-text h2 {
+  font-size: 1.7rem;
+  margin: 0;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Trunca a máximo 2 líneas al inicio */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.hero-main:hover .hero-text h2 {
+  -webkit-line-clamp: 6; /* Expande y revela el título completo al hover */
+}
+
+.hero-text-small h3 {
+  font-size: 1.15rem;
+  margin: 0;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Trunca a máximo 2 líneas al inicio */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.hero-small:hover .hero-text-small h3 {
+  -webkit-line-clamp: 6; /* Expande y revela el título completo al hover */
+}
+
+
+@media screen and (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+
+  }
+
+  .hero-main {
+    height: 350px;
+  }
+
+  .hero-small {
+    height: 250px;
+  }
+}
+
+/*------------------------------------------------------------*/
+
+.content-wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.ad-horizontal {
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* --------------------------------------------------------- */
+.category-block {
+  margin-bottom: 40px;
+}
+
+.category-title {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  display: inline-block;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.news-card {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: transform 0.5s ease;
+}
+
+.news-card:hover .card-img {
+  transform: scale(1.03);
+}
+
+/* 
+   TÍTULOS EN TARJETAS DEL FEED CON TRUNCADO MULTILÍNEA:
+   Establecemos un límite inicial limpio de máximo 2 líneas. Al hacer hover,
+   el título se expande mostrando todas las palabras sin romper el grid de tarjetas.
+*/
+.card-info h3 {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Trunca a máximo 2 líneas de inicio */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.news-card:hover .card-info h3 {
+  -webkit-line-clamp: 6; /* Muestra el título completo al pasar el ratón */
+}
+
+.card-info p {
+  font-size: 0.9rem;
+  color: var(--color-third);
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------*/
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+
+.widget-popular {
+  background-color: #ffffff;
+  padding: 25px 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.widget-title {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  font-weight: 900;
+}
+
+.popular-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.popular-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 15px;
+}
+
+.popular-list li:last-child {
+  border-bottom: none;
+}
+
+.popular-list .number {
+  color: var(--color-second);
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.popular-list a {
+  text-decoration: none;
+  color: var(--font-color);
+  font-size: 0.95rem;
+  font-weight: bold;
+  line-height: 1.3;
+  transition: color 0.3s ease;
+}
+
+.popular-list a:hover {
+  color: var(--color-second);
+}
+
+.ad-square {
+  text-align: center;
+}
+
+/* ---------------------------------------------------------*/
+.footer {
+  background-color: #1e1f1e;
+  color: #fff;
+  margin-top: 40px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-content p {
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+
+@media screen and (max-width: 992px) {
+
+
+  .content-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 576px) {
+
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   ESTILOS PARA EL MODAL DE LECTURA PREMIUM (Cambio 2)
+   ========================================================================== */
+.clickable-article {
+  cursor: pointer;
+}
+
+/* Fondo oscuro translúcido con efecto glassmorphism */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75); /* Fondo oscuro */
+  z-index: 2000; /* Siempre por encima de la cabecera */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  backdrop-filter: blur(8px); /* Desenfoque del fondo original */
+  -webkit-backdrop-filter: blur(8px);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Activa la visualización del fondo */
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Contenedor del artículo con tamaño optimizado de lectura */
+.modal-container {
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 750px;
+  height: 80vh; /* Altura fija relativa al viewport para que los scrollbars funcionen */
+  max-height: 80vh; 
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.9); /* Efecto de escala inicial */
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Escalado natural cuando el modal se activa */
+.modal-overlay.active .modal-container {
+  transform: scale(1);
+}
+
+/* Botón de cerrar redondo ultra-premium */
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #ffffff;
+  color: #1e1f1e;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 1.4rem;
+  line-height: 1;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-close:hover {
+  background: #f4f4f4;
+  color: var(--color-second); /* Cambia al azul característico de VOXEL */
+  transform: scale(1.08) rotate(90deg); /* Pequeño giro sutil y estético */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* La maquetación del contenido interno ahora la maneja directamente .modal-container */
+
+/* 
+   ÁREA DE SCROLL COMPLETO PREMIUM (Novedad):
+   Este contenedor ocupa el 100% de la altura y anchura del modal y tiene overflow-y: auto.
+   Esto permite que tanto la imagen como el texto se desplacen juntos de forma clásica,
+   haciendo que al deslizarte hacia abajo la foto suba y desaparezca, liberando todo el espacio para el texto.
+*/
+.modal-scroll-area {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  display: block; /* Flujo clásico continuo vertical */
+}
+
+/* Envoltura multimedia de imagen (Dentro del scroll general) */
+.modal-media-wrapper {
+  position: relative;
+  width: 100%;
+  height: 350px; /* Tamaño de cabecera imponente */
+  background-color: #0b0d19; /* Fondo oscuro cinematográfico premium */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; /* Sin paddings restrictivos para máximo ancho */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* 
+   IMAGEN ANCHA Y MAJESTUOSA:
+   Usa object-fit: contain para verse completa sin recortarse,
+   y aprovecha el 100% del contenedor.
+*/
+.modal-media-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Evita que la imagen se corte */
+  cursor: zoom-in; /* Indica que es ampliable */
+  transition: transform 0.2s ease;
+}
+
+/* Lightbox para ampliar imagen en pantalla completa */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.95);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.lightbox-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.lightbox-img {
+  max-width: 95%;
+  max-height: 95%;
+  border-radius: 4px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8);
+  transform: scale(0.97);
+  transition: transform 0.3s ease;
+}
+.lightbox-overlay.active .lightbox-img {
+  transform: scale(1);
+}
+
+/* Botones del carrusel multimedia flotantes (diseño limpio y premium en los espacios laterales) */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.15); /* Botón translúcido premium */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 5;
+}
+
+/* Efectos premium de hover y presión */
+.slider-btn:hover {
+  background: var(--color-second); /* Cambia al azul corporativo VOXEL */
+  color: #ffffff; /* Flecha blanca */
+  border-color: var(--color-second);
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 6px 18px rgba(18, 21, 202, 0.4); /* Sombra azul brillante */
+}
+
+.slider-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Posicionamiento flotante sobre la imagen */
+.prev-btn {
+  left: 15px;
+}
+
+.next-btn {
+  right: 15px;
+}
+
+/* Envoltura del cuerpo de texto en flujo continuo de scroll */
+.modal-body-wrapper {
+  padding: 35px 40px 50px 40px; /* 50px de padding inferior para dar aire a la lectura del final */
+}
+
+.modal-body-wrapper h2 {
+  font-family: var(--font);
+  font-size: 2.1rem;
+  margin: 12px 0 15px;
+  line-height: 1.25;
+  color: #1e1f1e;
+}
+
+.modal-meta {
+  font-size: 0.85rem;
+  color: var(--color-third);
+  margin-bottom: 20px;
+  font-family: var(--font);
+  border-bottom: 1px solid #eee;
+  padding-bottom: 12px;
+  display: flex;
+  gap: 15px;
+}
+
+/* Tipografía de lectura del cuerpo */
+.modal-text-content {
+  font-size: 1.12rem;
+  line-height: 1.75;
+  color: #333333;
+  font-family: Arial, sans-serif;
+  text-align: justify;
+}
+
+/* ==========================================================================
+   ESTILOS PREMIUM PARA LA PÁGINA DE CATEGORÍAS (Boceto del Usuario)
+   ========================================================================== */
+
+/* Subrayado permanente activo para la opción seleccionada del menú */
+.nav-links li a.active {
+  color: var(--color-second);
+}
+
+.nav-links li a.active::after {
+  width: 100%;
+}
+
+/* Título de la Categoría Principal Centrado en el Encabezado */
+.category-page-title {
+  text-align: center;
+  font-size: 2.8rem;
+  font-family: var(--font);
+  text-transform: uppercase;
+  margin: 35px 0 25px;
+  color: #1e1f1e;
+  font-weight: 900;
+  letter-spacing: 2px;
+  position: relative;
+  display: block;
+}
+
+.category-page-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: var(--color-second);
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+/* Cuadrícula de Distribución en Dos Columnas (Lista de Noticias | Publicidad Lateral) */
+.category-layout {
+  display: grid;
+  grid-template-columns: 2.3fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto 50px;
+  padding: 0 15px;
+}
+
+/* Tarjeta Horizontal de Noticias (Imagen a la izquierda | Contenido a la derecha) */
+.news-card-horizontal {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 25px;
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  margin-bottom: 25px;
+  border: 1px solid rgba(0, 0, 0, 0.01);
+}
+
+.news-card-horizontal:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.card-horizontal-img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.5s ease;
+}
+
+.news-card-horizontal:hover .card-horizontal-img {
+  transform: scale(1.02);
+}
+
+.card-horizontal-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Título con Expansión al Hover de forma unificada */
+.card-horizontal-info h3 {
+  font-family: var(--font);
+  font-size: 1.35rem;
+  margin-bottom: 8px;
+  line-height: 1.3;
+  color: #1e1f1e;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Trunca a máximo 2 líneas de inicio */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.news-card-horizontal:hover .card-horizontal-info h3 {
+  -webkit-line-clamp: 6; /* Muestra el título completo al hover */
+}
+
+.card-horizontal-info p {
+  font-size: 0.95rem;
+  color: var(--color-third);
+  margin-bottom: 12px;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.date-tag {
+  font-size: 0.8rem;
+  color: #999999;
+  font-weight: bold;
+}
+
+/* Barra Lateral de Publicidad Vertical */
+.sidebar-category {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: sticky;
+  top: 90px;
+  align-self: start;
+}
+
+.ad-vertical {
+  text-align: center;
+  width: 100%;
+}
+
+.ad-vertical img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* BLOQUE DE PAGINACIÓN DINÁMICA (SIGUIENTE, ANTERIOR Y NÚMEROS DE PÁGINAS) */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 45px 0 20px;
+}
+
+.pag-btn {
+  padding: 10px 18px;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  color: var(--font-color);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.9rem;
+  font-family: var(--font);
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
+}
+
+.pag-btn:hover:not(.disabled) {
+  background-color: var(--color-second);
+  color: #ffffff;
+  border-color: var(--color-second);
+  box-shadow: 0 6px 15px rgba(18, 21, 202, 0.25);
+  transform: translateY(-1px);
+}
+
+.pag-btn.disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background-color: #fcfcfc;
+}
+
+.pag-number {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 50%;
+  color: var(--font-color);
+  text-decoration: none;
+  font-weight: bold;
+  font-family: var(--font);
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
+}
+
+.pag-number:hover {
+  background-color: #f4f4f4;
+  transform: translateY(-1px);
+}
+
+.pag-number.active-pag {
+  background-color: var(--color-second);
+  color: #ffffff;
+  border-color: var(--color-second);
+  box-shadow: 0 6px 15px rgba(18, 21, 202, 0.25);
+}
+
+/* Espacio publicitario al final de la lectura en el modal (Monetización Premium) */
+.modal-ad-banner {
+  margin-top: 40px;
+  padding-top: 25px;
+  border-top: 1px dashed #e2e8f0; /* Fina línea discontinua divisoria elegante */
+  text-align: center;
+  width: 100%;
+}
+
+.modal-ad-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.modal-ad-img:hover {
+  transform: scale(1.015);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ========================================================================== */
+   ADAPTACIÓN MÓVIL PREMIUM (Responsive Design)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  /* 
+     Adaptación de la Página de Categorías en Móviles:
+     La cuadrícula de dos columnas colapsa a una sola, la publicidad lateral se va abajo
+     y las tarjetas horizontales se vuelven verticales para mejor lectura táctil.
+  */
+  .category-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .news-card-horizontal {
+    grid-template-columns: 1fr; /* Tarjeta vertical en celulares */
+    gap: 15px;
+    padding: 12px;
+    border-radius: 12px;
+  }
+  
+  .card-horizontal-img {
+    height: 180px; /* Altura de imagen óptima para celulares */
+  }
+  
+  .card-horizontal-info h3 {
+    font-size: 1.2rem;
+    margin-top: 5px;
+  }
+  
+  .sidebar-category {
+    position: static; /* Quita el sticky en dispositivos táctiles */
+    margin-top: 20px;
+  }
+
+  .category-page-title {
+    font-size: 2.1rem;
+    margin: 25px 0 15px;
+  }
+  /* 
+     Títulos del Hero en Móviles:
+     Reducimos las fuentes y los paddings para que los títulos multilínea 
+     (que inician truncados a 2 líneas) dejen respirar la foto en celulares.
+  */
+  .hero-text {
+    padding: 15px;
+  }
+  
+  .hero-text h2 {
+    font-size: 1.35rem;
+    line-height: 1.2;
+  }
+  
+  .hero-text-small {
+    padding: 12px;
+  }
+  
+  .hero-text-small h3 {
+    font-size: 1.05rem;
+    line-height: 1.2;
+  }
+
+  /* 
+     Modal Multimedia en Móviles:
+     Aumentamos el alto y eliminamos los paddings laterales restrictivos
+     para que la imagen ocupe todo el ancho real de la pantalla del celular.
+  */
+  .modal-media-wrapper {
+    height: 250px; /* Altura optimizada para pantallas táctiles */
+    padding: 0; /* 0 padding para máximo ancho horizontal */
+  }
+  
+  .modal-media-wrapper img {
+    border-radius: 0; /* Sin bordes curvos en móvil para un diseño limpio e inmersivo */
+  }
+
+  /* Botones laterales flotantes compactos para celulares */
+  .slider-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.4); /* Un toque más oscuro en móvil para contraste */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  
+  .next-btn {
+    right: 10px;
+    left: auto;
+  }
+
+  /* Botón de cierre compacto en celulares */
+  .modal-close {
+    width: 34px;
+    height: 34px;
+    font-size: 1.1rem;
+    top: 10px;
+    right: 10px;
+  }
+
+  /* Cuerpo de texto en celulares: espaciado optimizado */
+  .modal-body-wrapper {
+    padding: 25px 20px 40px 20px;
+  }
+  
+  .modal-body-wrapper h2 {
+    font-size: 1.55rem;
+    margin: 10px 0 12px;
+  }
+  
+  .modal-text-content {
+    font-size: 1.05rem;
+    line-height: 1.65;
+  }
+}
+
+/* ==========================================================================
+   NUEVOS ESTILOS PARA MULTIMEDIA AVANZADA Y COMPARTICIÓN SOCIAL | VOXEL
+   ========================================================================== */
+
+/* Contenedor de Video YouTube Responsivo 16:9 */
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
+  background-color: #000;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Barra superior de Compartir en Redes Sociales */
+.share-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.share-bar span {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: var(--color-third);
+  text-transform: uppercase;
+  font-family: var(--font);
+  letter-spacing: 0.5px;
+}
+
+/* Botones Premium de Compartir */
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: bold;
+  font-family: var(--font);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.share-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.share-btn:active {
+  transform: translateY(0);
+}
+
+/* Colores de Marca para Redes */
+.btn-facebook {
+  background-color: #1877f2;
+}
+.btn-facebook:hover {
+  background-color: #166fe5;
+}
+
+.btn-twitter {
+  background-color: #1e1f1e; /* El estilo oscuro moderno para X/Twitter */
+}
+.btn-twitter:hover {
+  background-color: #333333;
+}
+
+.btn-whatsapp {
+  background-color: #25d366;
+}
+.btn-whatsapp:hover {
+  background-color: #20ba5a;
+}
+
+.btn-copy {
+  background-color: #1215ca; /* Azul VOXEL */
+}
+.btn-copy:hover {
+  background-color: #0b0c9c;
+}
+
+.btn-tiktok {
+  background-color: #010101;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  text-shadow: -1px -1px 0 #fe2c55, 1px 1px 0 #25f4ee;
+}
+.btn-tiktok:hover {
+  background-color: #111111;
+  box-shadow: 0 4px 15px rgba(254, 44, 85, 0.35), 0 4px 15px rgba(37, 244, 238, 0.35);
+}
+
+.btn-instagram {
+  background: linear-gradient(45deg, #f09433, #dc2743, #cc2366);
+}
+.btn-instagram:hover {
+  background: linear-gradient(45deg, #e08423, #cc1733, #bc1356);
+  box-shadow: 0 4px 15px rgba(220, 39, 67, 0.4);
+}
+
+/* Contador de Fotos para Slider */
+.slider-counter {
+  position: absolute;
+  bottom: 20px;
+  right: 75px;
+  background-color: rgba(0, 0, 0, 0.65);
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  font-family: var(--font);
+  z-index: 6;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+}
+
+/* Adaptación responsive para botones de compartir */
+@media screen and (max-width: 576px) {
+  .share-bar {
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+  }
+  .share-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    flex-grow: 1;
+    text-align: center;
+  }
+}
